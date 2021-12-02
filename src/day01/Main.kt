@@ -2,12 +2,14 @@ package day01
 
 import readInput
 
-fun part1(input: List<String>) = input.map { it.toInt() }.windowed(size=2).count { it[1] > it[0] }
+private fun part1(input: List<String>) = input.map { it.toInt() }.windowed(size=2).count { it[1] > it[0] }
 
-fun part2(input: List<String>) = input.map { it.toInt() }.windowed(size=4).count { it.takeLast(3).sum() > it.take(3).sum() }
+private fun part2(input: List<String>) = input.map { it.toInt() }.windowed(size=4).count { it.takeLast(3).sum() > it.take(3).sum() }
 
 fun main() {
-    val input = readInput("day01", "input")
+    val subpackage = "day01"
+    val input = readInput(subpackage, "input")
+//    val input = readInput(subpackage, "test_input")
     val start = System.currentTimeMillis()
     val result1 = part1(input)
     val result2 = part2(input)
