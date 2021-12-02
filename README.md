@@ -33,3 +33,11 @@ Kotlin's generous standard library for the win.
 
 [1a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/windowed.html
 [1b]: https://kotlinlang.org/docs/collection-parts.html
+
+# Day 2
+
+Dusting off the trusty [when][2a] construct. It often looks cleaner than `if` / `else if` / `else`.
+
+In the case of the code here for Day 2, an `else` branch is not needed because `when` is not used as an expression.
+
+[2a]: https://kotlinlang.org/docs/control-flow.html#when-expression
