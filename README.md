@@ -41,3 +41,23 @@ Dusting off the trusty [when][2a] construct. It often looks cleaner than `if` / 
 In the case of the code here for Day 2, an `else` branch is not needed because `when` is not used as an expression.
 
 [2a]: https://kotlinlang.org/docs/control-flow.html#when-expression
+
+# Day 3
+
+For part 1, a scope function [with][3a] is used for the first time. This is my favorite way to use a `StringBuilder`:
+
+```kotlin
+with(StringBuilder()) {
+    append("Hello, ")
+    append("World!")
+    toString()
+}
+```
+
+For part 2, an [extension function][3b] is used for the first time.
+This simplifies things by breaking the code across different places while allowing expressive code.
+
+Both *scope functions* and *extension functions* are some of the best features of Kotlin! ❤️
+
+[3a]: https://kotlinlang.org/docs/scope-functions.html#with
+[3b]: https://kotlinlang.org/docs/extensions.html
