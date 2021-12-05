@@ -61,3 +61,32 @@ Both *scope functions* and *extension functions* are some of the best features o
 
 [3a]: https://kotlinlang.org/docs/scope-functions.html#with
 [3b]: https://kotlinlang.org/docs/extensions.html
+
+# Day 4
+
+For the first time, a `class` was used to represent the board (bingo card). A board is a list of rows, and a row is a list of strings.
+
+Two data structures are built in the Board class:
+
+- All bingos for the board, made of the rows and columns, each as a set of Strings.
+- All entries on the board as a set.
+
+When comparing against the set of all called numbers, it is easy to check for bingo with
+
+```kotlin
+fun hasBingo(called: Set<String>) = bingos.any { called.containsAll(it) }
+```
+
+and get all uncrossed numbers with
+
+```kotlin
+fun getUncrossed(called: Set<String>) = entries - called
+```
+
+We can break up the input on new lines into chunks with:
+
+```kotlin
+fun getChunks(input: List<str>) = input.joinToString("\n").trim().split("\n\n")
+```
+
+Then from there, split each chunk on new lines to get rows again.
