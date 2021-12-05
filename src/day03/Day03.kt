@@ -2,7 +2,7 @@ package day03
 
 import readInput
 
-private fun part1(input: List<String>): Int {
+fun part1(input: List<String>): Int {
     val gamma = with(StringBuilder()) {
         for (i in input[0].indices) {
             append(input.map{ it[i] }.groupingBy { it }.eachCount().maxByOrNull { it.value }?.key ?: "")
@@ -25,7 +25,7 @@ fun List<String>.filterByBit(index: Int, compare: (Int, Int) -> Boolean): List<S
     }
 }
 
-private fun part2(input: List<String>): Int {
+fun part2(input: List<String>): Int {
     var oxygen = input
     var co2 = input
     for (i in input[0].indices) {

@@ -2,9 +2,9 @@ package day01
 
 import readInput
 
-private fun part1(input: List<String>) = input.map { it.toInt() }.windowed(size=2).count { it[1] > it[0] }
+fun part1(input: List<String>) = input.map { it.toInt() }.windowed(size=2).count { it[1] > it[0] }
 
-private fun part2(input: List<String>) = input.map { it.toInt() }.windowed(size=4).count { it.takeLast(3).sum() > it.take(3).sum() }
+fun part2(input: List<String>) = input.map { it.toInt() }.windowed(size=4).count { it.takeLast(3).sum() > it.take(3).sum() }
 
 fun main() {
     val subpackage = "day01"

@@ -2,14 +2,14 @@ package day02
 
 import readInput
 
-private fun part1(input: List<String>): Int {
+fun part1(input: List<String>): Int {
     val (length, depth) = input.map { it.split(" ") }.partition { it[0] == "forward" }
     val totalLength = length.sumOf { it[1].toInt() }
     val totalDepth = depth.sumOf { if (it[0] == "down") it[1].toInt() else -it[1].toInt() }
     return totalLength * totalDepth
 }
 
-private fun part2(input: List<String>): Int {
+fun part2(input: List<String>): Int {
     var aim = 0
     var depth = 0
     var length = 0
