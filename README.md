@@ -90,3 +90,18 @@ fun getChunks(input: List<str>) = input.joinToString("\n").trim().split("\n\n")
 ```
 
 Then from there, split each chunk on new lines to get rows again.
+
+# Day 5
+
+Today, we continue to explore Kotlin's collection methods in the standard library with [`flatMap`][5a].
+For each line in the input, we get a list of all grid points that the line crosses. `flatMap` combines all of those lists into a single list.
+
+A few more notes. To use [regex][5b] in Kotlin, an easy way to do this is to convert a [raw string][5c] to a regex object, for example:
+
+```kotlin
+"""\d+""".toRegex().findAll(line)
+```
+
+[5a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/flat-map.html
+[5b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-regex/
+[5c]: https://kotlinlang.org/docs/basic-types.html#string-literals
