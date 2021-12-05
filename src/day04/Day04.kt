@@ -44,11 +44,11 @@ fun getFinalScore(input: List<String>, first: Boolean): Int {
 
 
 fun part1(input: List<String>): Int {
-    return getFinalScore(input, first=true)
+    return getFinalScore(input, first = true)
 }
 
 fun part2(input: List<String>): Int {
-    return getFinalScore(input, first=false)
+    return getFinalScore(input, first = false)
 }
 
 fun main() {
