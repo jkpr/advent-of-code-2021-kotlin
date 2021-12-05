@@ -1,26 +1,25 @@
 package day05
 
 import readInput
+import java.lang.Integer.max
 
+
+data class Line(val x1: Int, val y1: Int, val x2: Int, val y2: Int) {
+    fun pointsToList(): List<Pair<Int, Int>> {
+        val dx = if (x1 == x2) 0 else if (x1 < x2) 1 else -1
+        val dy = if (y1 == y2) 0 else if (y1 < y2) 1 else -1
+        val nSteps = max(dx * (x2 - x1), dy * (y2 - y1))
+        return (0..nSteps).map { (x1 + dx * it) to (y1 + dy * it) }
+    }
+
+    fun isDiagonal() = x1 != x2 && y1 != y2
+}
 
 fun countVents(input: List<String>, diagonals: Boolean): Int {
     return input.flatMap {
         val (x1, y1, x2, y2) = """\d+""".toRegex().findAll(it).map { found -> found.value.toInt() }.toList()
-        if (x1 == x2) {
-            val (start, end) = listOf(y1, y2).sorted()
-            (start..end).map { y -> x1 to y }
-        } else if (y1 == y2) {
-            val (start, end) = listOf(x1, x2).sorted()
-            (start..end).map { x -> x to y1 }
-        } else if (diagonals) {
-            val dx = if (x1 < x2) 1 else -1
-            val dy = if (y1 < y2) 1 else -1
-            (0..dx * (x2 - x1)).map { t ->
-                (x1 + dx * t) to (y1 + dy * t)
-            }
-        } else {
-            listOf()
-        }
+        val line = Line(x1, y1, x2, y2)
+        if (diagonals || !line.isDiagonal()) line.pointsToList() else listOf()
     }.groupingBy { it }.eachCount().count { it.value > 1 }
 }
 
