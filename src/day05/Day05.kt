@@ -15,8 +15,8 @@ fun countVents(input: List<String>, diagonals: Boolean): Int {
         } else if (diagonals) {
             val dx = if (x1 < x2) 1 else -1
             val dy = if (y1 < y2) 1 else -1
-            (0..dx * (x2 - x1)).map {
-                (x1 + dx * it) to (y1 + dy * it)
+            (0..dx * (x2 - x1)).map { t ->
+                (x1 + dx * t) to (y1 + dy * t)
             }
         } else {
             listOf()
