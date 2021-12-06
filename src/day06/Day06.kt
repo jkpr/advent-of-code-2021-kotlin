@@ -11,7 +11,7 @@ fun spawnLanternfish(input: List<String>, days: Int): Long {
         nextGen[8] = fish.getOrDefault(0, 0)
         fish = nextGen
     }
-    return fish.values.reduce { a, b -> a + b }
+    return fish.values.sum()
 }
 
 fun part1(input: List<String>) = spawnLanternfish(input, 80)
