@@ -105,3 +105,19 @@ A few more notes. To use [regex][5b] in Kotlin, an easy way to do this is to con
 [5a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/flat-map.html
 [5b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-regex/
 [5c]: https://kotlinlang.org/docs/basic-types.html#string-literals
+
+# Day 6
+
+My template for solutions return integers. 
+So when the results were coming back negative, it was not hard to figure out we were dealing with numbers larger than [`Int.MAX_VALUE`][6a].
+(On my machine, that happens to be 2147483647 = 2^31 - 1).
+
+The great thing about the Kotlin compiler being able to infer types is that this change only required one function signature change.
+
+I built a map of days left to spawn as keys with counts of lanternfish as values.
+
+In this solution, I got to use [`Map.mapValues`][6b] during set up to convert integer counts to long counts and [`Map.mapKeys`][6c] to decrease the counters.
+
+[6a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/-m-a-x_-v-a-l-u-e.html
+[6b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-keys.html
+[6c]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-values.html
