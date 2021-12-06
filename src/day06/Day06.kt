@@ -5,7 +5,7 @@ import readInput
 
 fun spawnLanternfish(input: List<String>, days: Int): Long {
     var fish = input[0].split(",").map { it.toInt() }.groupingBy { it }.eachCount().mapValues { it.value.toLong() }.toMutableMap()
-    (1..days).forEach { _ ->
+    repeat(days) { _ ->
         val nextGen = fish.filterKeys { it != 0 }.mapKeys { it.key - 1 }.toMutableMap()
         nextGen[6] = nextGen.getOrDefault(6, 0) + fish.getOrDefault(0, 0)
         nextGen[8] = fish.getOrDefault(0, 0)
