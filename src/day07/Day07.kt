@@ -6,7 +6,7 @@ import kotlin.math.abs
 
 fun moveCrabs(input: List<String>, fuelCost: (distance: Int) -> Int): Int {
     val crabs = input[0].split(",").map { it.toInt() }
-    return (0..(crabs.maxOf { it })).map { pos -> crabs.sumOf { fuelCost(abs(it - pos)) }}.minOf{ it }
+    return (0..(crabs.maxOf { it })).minOf { pos -> crabs.sumOf { fuelCost(abs(it - pos)) }}
 }
 
 fun part1(input: List<String>) = moveCrabs(input) { it }
