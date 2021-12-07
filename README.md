@@ -133,5 +133,23 @@ This different fuel calculations for the two parts are passed to a common `moveC
 Today I learned about the [`maxOf`][7a] and [`minOf`][7b] functions.
 These have a non-nullable return value and throw an error if there is nothing to evaluate.
 
+**_EDIT:_** After the fact, I realized that I was doing something essentially like this:
+
+```kotlin
+fun myFun() {
+    val crabs = someComputation()
+    return doSomethingElse(crabs)
+}
+```
+
+This can be refined to use the [`let`][7c] scope function:
+
+```kotlin
+fun myFun() = someComputation().let { doSomethingElse(it) }
+```
+
+This is an improvement, in my opinion.
+
 [7a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/max-of.html
 [7b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/min-of.html
+[7c]: https://kotlinlang.org/docs/scope-functions.html#let
