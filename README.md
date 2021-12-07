@@ -121,3 +121,17 @@ In this solution, I got to use [`Map.mapValues`][6b] during set up to convert in
 [6a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/-m-a-x_-v-a-l-u-e.html
 [6b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-keys.html
 [6c]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-values.html
+
+# Day 7
+
+The key is to calculate the fuel cost based on distance traveled.
+For part 1, the cost is equal to the distance.
+For part 2, it is equal to the sum of integers from 1 up to `dist`, or `dist * (dist + 1) / 2`.
+
+This different fuel calculations for the two parts are passed to a common `moveCrabs` function.
+
+Today I learned about the [`maxOf`][7a] and [`minOf`][7b] functions.
+These have a non-nullable return value and throw an error if there is nothing to evaluate.
+
+[7a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/max-of.html
+[7b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/min-of.html
