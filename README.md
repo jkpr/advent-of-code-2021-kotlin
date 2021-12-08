@@ -153,3 +153,34 @@ This is an improvement, in my opinion.
 [7a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/max-of.html
 [7b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/min-of.html
 [7c]: https://kotlinlang.org/docs/scope-functions.html#let
+
+# Day 8
+
+For part 1, in order to get the last four numbers of each entry, we make use of the `startIndex` parameter of [`Regex.findAll()`][8a].
+The `startIndex` is where we find the pipe (`|`) character with `line.indexOf('|')`.
+
+Kotlin provides a few ways to get a map from a sequence:
+
+- [`associate`][8b]: the lambda must return a `Pair`. These become the map entries.
+- [`associateBy`][8c]: the lambda returns the key. The original list item is the value.
+- [`associateWith`][8d]: the lambda returns the value. The original list item is the key.
+
+
+In part 2, we make use of these. First we create a map with the digits we know based on segment size, i.e. 1, 4, 7, and 8.
+Then we use [`also`][8e] to return that map after adding the rest of the digits to it.
+
+**_Tip:_** Standard library functions typically do not return mutuable maps.
+The best way to get one is to take a map, e.g. from `associate`, and call `toMutableMap()` on it.
+
+**_Tip:_** An easy way to reverse a map is:
+
+```kotlin
+myMap.associate{ (k, v) -> v to k }
+```
+
+
+[8a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-regex/find-all.html
+[8b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/associate.html
+[8c]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/associate-by.html
+[8d]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/associate-with.html
+[8e]: https://kotlinlang.org/docs/scope-functions.html#also
