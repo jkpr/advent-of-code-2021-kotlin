@@ -4,9 +4,9 @@ import readInput
 
 
 val matches = mapOf(
+    '(' to ')',
     '[' to ']',
     '{' to '}',
-    '(' to ')',
     '<' to '>'
 )
 
