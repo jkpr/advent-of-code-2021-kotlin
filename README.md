@@ -61,9 +61,10 @@ The above can be replaced with:
 buildString {
     append("Hello, ")
     append("World!")
-    toString()
 }
 ```
+
+(note that `toString()` is called for us).
 
 For part 2, an [extension function][3c] is used for the first time.
 This simplifies things by breaking the code across different places while allowing expressive code.

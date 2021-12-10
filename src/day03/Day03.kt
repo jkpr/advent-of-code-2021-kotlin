@@ -7,7 +7,6 @@ fun part1(input: List<String>): Int {
         for (i in input[0].indices) {
             append(input.map{ it[i] }.groupingBy { it }.eachCount().maxByOrNull { it.value }?.key ?: "")
         }
-        toString()
     }
     val epsilon = gamma.map{ if (it == '1') '0' else '1' }.joinToString("")
     return gamma.toInt(2) * epsilon.toInt(2)
