@@ -3,11 +3,13 @@ package day09
 import readInput
 
 
+const val HIGHEST_LEVEL = 9
+
 class DepthMap(val input: List<String>) {
     val coords = input.indices.product(input[0].indices)
-    val depths = coords.associateWith { (i, j) -> input[i][j] }.withDefault { '@' }
+    val heights = coords.associateWith { (i, j) -> input[i][j].toString().toInt() }.withDefault { HIGHEST_LEVEL }
     val lowPoints = coords.filter { point ->
-        depths.getValue(point) < point.neighbors().minOf { depths.getValue(it) }
+        heights.getValue(point) < point.neighbors().minOf { heights.getValue(it) }
     }
     val basins: Collection<List<Pair<Int, Int>>>
 
@@ -19,7 +21,7 @@ class DepthMap(val input: List<String>) {
     }
 
     private fun searchBasin(point: Pair<Int, Int>, coordsWithBasinLabels: MutableMap<Pair<Int,Int>, Int>, label: Int) {
-        if (point !in coordsWithBasinLabels && depths.getValue(point) < '9') {
+        if (point !in coordsWithBasinLabels && heights.getValue(point) < HIGHEST_LEVEL) {
             coordsWithBasinLabels[point] = label
             point.neighbors().forEach { searchBasin(it, coordsWithBasinLabels, label) }
         }
@@ -36,7 +38,7 @@ fun Pair<Int, Int>.neighbors() = listOf(
 )
 
 fun part1(input: List<String>) = DepthMap(input).run {
-    lowPoints.sumOf { depths[it].toString().toInt() + 1 }
+    lowPoints.sumOf { heights.getValue(it) + 1 }
 }
 
 fun part2(input: List<String>) = DepthMap(input).run {
