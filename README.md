@@ -218,3 +218,29 @@ We also used the [`run`][9b] scope function. We wanted to return the result of t
 
 [9a]: https://kotlinlang.org/docs/classes.html#constructors
 [9b]: https://kotlinlang.org/docs/scope-functions.html#run
+
+# Day 10
+
+I am trying to be more expressive with code today, rather than a lot of collection streaming.
+This is done by making extension functions.
+
+Part 1 is to get the first illegal character for lines that have them ([`mapNotNull`][10a]).
+Then sum up the illegal character score. That translates to:
+
+```kotlin
+fun part1(input: List<String>) = input.mapNotNull { it.firstIllegalCharOrNull() }.sumOf { illegalCharPoints.getValue(it) }
+```
+
+and it is quite readable, in my opinion.
+
+For part 2, we keep the lines that do not have an illegal character. 
+Then for each line, get the completion string, and calculate its score.
+Then sort all scores and take the middle item. That translates to:
+
+```kotlin
+fun part2(input: List<String>) = input.filter { it.firstIllegalCharOrNull() == null }.map { it.completionString().completionScore() }.sorted().middle()
+```
+
+We describe what we are doing in English, translate to Kotlin, then add the necessary extension functions.
+
+[10a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-not-null.html

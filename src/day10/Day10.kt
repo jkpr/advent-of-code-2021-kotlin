@@ -46,11 +46,13 @@ fun String.completionString(): String {
     }
 }
 
+fun <E> List<E>.middle(): E = this[size.div(2)]
+
+fun String.completionScore() = this.fold(0L) { score, char -> score * 5 + completionCharPoints.getValue(char) }
+
 fun part1(input: List<String>) = input.mapNotNull { it.firstIllegalCharOrNull() }.sumOf { illegalCharPoints.getValue(it) }
 
-fun part2(input: List<String>) = input.filter { it.firstIllegalCharOrNull() == null }.map {
-    it.completionString().fold(0L) { score, char -> score * 5 + completionCharPoints.getValue(char) }
-}.sorted().let { it[it.size.div(2)] }
+fun part2(input: List<String>) = input.filter { it.firstIllegalCharOrNull() == null }.map { it.completionString().completionScore() }.sorted().middle()
 
 fun main() {
     val subpackage = "day10"
