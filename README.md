@@ -54,13 +54,25 @@ with(StringBuilder()) {
 }
 ```
 
-For part 2, an [extension function][3b] is used for the first time.
+**_EDIT:_** Apparently there is a synonym of the above: [`buildString`][3b].
+The above can be replaced with:
+
+```kotlin
+buildString {
+    append("Hello, ")
+    append("World!")
+    toString()
+}
+```
+
+For part 2, an [extension function][3c] is used for the first time.
 This simplifies things by breaking the code across different places while allowing expressive code.
 
 Both *scope functions* and *extension functions* are some of the best features of Kotlin! ❤️
 
 [3a]: https://kotlinlang.org/docs/scope-functions.html#with
-[3b]: https://kotlinlang.org/docs/extensions.html
+[3b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/build-string.html
+[3c]: https://kotlinlang.org/docs/extensions.html
 
 # Day 4
 
@@ -184,3 +196,24 @@ myMap.associate{ (k, v) -> v to k }
 [8c]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/associate-by.html
 [8d]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/associate-with.html
 [8e]: https://kotlinlang.org/docs/scope-functions.html#also
+
+# Day 9
+
+This is our first time with an [`init`][9a] block.
+We used it because we had a value we wanted to initialize, but it needed to take more than one line.
+That is why an initializer like `val myValue = EXPR` doesn't work. Instead, we do something like this:
+
+```kotlin
+class myClass() {
+    val myVal: String
+    init {
+        // could be any arbitrary code here.
+        myVal = EXPR
+    }
+}
+```
+
+We also used the [`run`][9b] scope function. We wanted to return the result of the lambda, but use `this` inside the lambda.
+
+[9a]: https://kotlinlang.org/docs/classes.html#constructors
+[9b]: https://kotlinlang.org/docs/scope-functions.html#run

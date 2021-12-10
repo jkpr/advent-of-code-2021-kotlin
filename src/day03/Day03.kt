@@ -3,7 +3,7 @@ package day03
 import readInput
 
 fun part1(input: List<String>): Int {
-    val gamma = with(StringBuilder()) {
+    val gamma = buildString {
         for (i in input[0].indices) {
             append(input.map{ it[i] }.groupingBy { it }.eachCount().maxByOrNull { it.value }?.key ?: "")
         }
