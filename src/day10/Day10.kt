@@ -46,9 +46,9 @@ fun String.completionString(): String {
     }
 }
 
-fun <E> List<E>.middle(): E = this[size.div(2)]
-
 fun String.completionScore() = this.fold(0L) { score, char -> score * 5 + completionCharPoints.getValue(char) }
+
+fun <E> List<E>.middle(): E = this[size.div(2)]
 
 fun part1(input: List<String>) = input.mapNotNull { it.firstIllegalCharOrNull() }.sumOf { illegalCharPoints.getValue(it) }
 
