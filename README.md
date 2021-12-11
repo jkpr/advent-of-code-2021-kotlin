@@ -244,3 +244,40 @@ fun part2(input: List<String>) = input.filter { it.firstIllegalCharOrNull() == n
 We describe what we are doing in English, translate to Kotlin, then add the necessary extension functions.
 
 [10a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-not-null.html
+
+# Day 11
+
+Today we override our first operator. In this case, we have a grid of points.
+One dimension varies from 0 up to `nrow` and the other varies from 0 up to `ncol`.
+How can we get all points in that grid? This might be nice:
+
+```kotlin
+for ( (i, j) in (0 until nrow) * (0 until ncol) ) ...
+```
+
+We do that by [overloading the `*` operator][11a] (and we also get to use an extension function!):
+
+```kotlin
+operator fun IntRange.times(other: IntRange) = this.flatMap { i -> other.map { j -> i to j }}
+```
+
+Do not forget the `operator` modifier! It is required! Also note: `0 until nrow` is an [`IntRange`][11b]
+
+Today, for debugging purposes I implemented the `toString` method on my `Octopuses` class.
+I had to [override][11c] the base class `toString`.
+One nice thing about Kotlin is that it makes you acknowledge you are overriding.
+Without the `override` modifier, the compiler wouldn't accept this:
+
+```kotlin
+override fun toString() = "Hello!"
+```
+
+This helps to cut down on errors when a base class method may be overridden unintentionally.
+
+The [`generateSequence`][11d] came in handy today for part 2.
+We wanted to start at 1 and keep increasing until we got all octopuses to flash.
+
+[11a]: https://kotlinlang.org/docs/operator-overloading.html
+[11b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/
+[11c]: https://kotlinlang.org/docs/inheritance.html#overriding-methods
+[11d]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/generate-sequence.html
