@@ -281,3 +281,13 @@ We wanted to start at 1 and keep increasing until we got all octopuses to flash.
 [11b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/
 [11c]: https://kotlinlang.org/docs/inheritance.html#overriding-methods
 [11d]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/generate-sequence.html
+
+# Day 12
+
+Today we used [`Map.withDefault { ... }`][12a] to help get to something like Python's [`defaultdict`][12b].
+
+The solution is a fairly straightforward [DFS recursion][12c].
+
+[12a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/with-default.html
+[12b]: https://docs.python.org/3/library/collections.html#collections.defaultdict
+[12c]: https://en.wikipedia.org/wiki/Depth-first_search
