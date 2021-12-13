@@ -3,7 +3,7 @@ package day12
 import readInput
 
 
-class Passage(input: List<String>, val allowExtraCave: Boolean) {
+class Passage(input: List<String>, val allowRevisit: Boolean) {
     val edges = mutableMapOf<String, Set<String>>().withDefault { setOf() }.apply {
         input.map{ it.split("-") }.forEach { (a, b) ->
             put(a, getValue(a) + b)
@@ -13,24 +13,22 @@ class Passage(input: List<String>, val allowExtraCave: Boolean) {
 
     val allPaths = search(listOf("start"))
 
-    fun search(path: List<String>): List<List<String>> {
+    fun search(path: List<String>, revisited: Boolean = false): List<List<String>> {
         val curr = path.last()
         if (curr == "end") return listOf(path)
-        return edges.getValue(curr).filterNot { next ->
-            next == "start" ||
-            next.isLower() && next in path &&
-            if (allowExtraCave) {
-                path.filter { it.isLower() }.groupingBy { it }.eachCount().values.any { it > 1 }
-            } else true
-        }.flatMap { search(path + it) }
+        return edges.getValue(curr).filterNot {
+            it == "start" || it.isLower() && it in path && if (allowRevisit) revisited else true
+        }.flatMap {
+            search(path + it, revisited || it.isLower() && it in path)
+        }
     }
 }
 
 fun String.isLower() = this.all { it.isLowerCase() }
 
-fun part1(input: List<String>) = Passage(input, allowExtraCave = false).allPaths.size
+fun part1(input: List<String>) = Passage(input, allowRevisit = false).allPaths.size
 
-fun part2(input: List<String>) = Passage(input, allowExtraCave = true).allPaths.size
+fun part2(input: List<String>) = Passage(input, allowRevisit = true).allPaths.size
 
 fun main() {
     val subpackage = "day12"
