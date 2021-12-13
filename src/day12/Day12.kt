@@ -11,18 +11,18 @@ class Passage(input: List<String>, val allowExtraCave: Boolean) {
         }
     }
 
-    val allPaths = search("start", listOf())
+    val allPaths = search(listOf("start"))
 
-    fun search(curr: String, path: List<String>): List<List<String>> {
-        val updatedPath = path + curr
-        if (curr == "end") return listOf(updatedPath)
+    fun search(path: List<String>): List<List<String>> {
+        val curr = path.last()
+        if (curr == "end") return listOf(path)
         return edges.getValue(curr).filterNot { next ->
             next == "start" ||
-            next.isLower() && next in updatedPath &&
+            next.isLower() && next in path &&
             if (allowExtraCave) {
-                updatedPath.filter { it.isLower() }.groupingBy { it }.eachCount().values.any { it >= 2 }
+                path.filter { it.isLower() }.groupingBy { it }.eachCount().values.any { it > 1 }
             } else true
-        }.flatMap { search(it, updatedPath) }
+        }.flatMap { search(path + it) }
     }
 }
 
