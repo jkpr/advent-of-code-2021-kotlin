@@ -31,8 +31,6 @@ data class Origami(val points: Set<Point>) {
 fun setup(input: List<String>): Pair<Origami, List<Fold>> {
     val points = input.filter { ',' in it }.map { it.split(",") }.map { Point(it[0].toInt(), it[1].toInt()) }.toSet()
     val folds = input.filter { '=' in it }.map { it.split(" ").last().split("=") }.map { Fold(it[0], it[1].toInt()) }
-    println(points)
-    println(folds)
     return Origami(points) to folds
 }
 
