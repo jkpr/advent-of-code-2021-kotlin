@@ -301,3 +301,27 @@ use them as members of a `Set`.
 The origami paper is modeled to have a set of points.
 
 [13a]: https://kotlinlang.org/docs/data-classes.html
+
+# Day 14
+
+This required a trick to keep track of [bigrams][14a] (two adjacent letters).
+
+I used the nice trick for building up a dictionary of counts, using the [`apply`][14b] scope function and [`withDefault`][14c]:
+
+```kotlin
+fun nextGen(bigramCounts: Map<String, Long>, rules: Map<String, String>) = mutableMapOf<String, Long>().withDefault { 0 }.apply {
+    bigramCounts.forEach { (bigram, count) ->
+        val middle = rules.getValue(bigram)
+        val first = "${bigram[0]}$middle"
+        val second = "$middle${bigram[1]}"
+        put(first, getValue(first) + count)
+        put(second, getValue(second) + count)
+    }
+}
+```
+
+As usual, the receiver is referred to as `this` inside the lambda, and it can be omitted where it can be inferred, e.g. `put` instead of `this.put`.
+
+[14a]: https://en.wikipedia.org/wiki/Bigram
+[14b]: https://kotlinlang.org/docs/scope-functions.html#apply
+[14c]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/with-default.html
