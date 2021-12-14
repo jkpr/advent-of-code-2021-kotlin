@@ -252,7 +252,7 @@ One dimension varies from 0 up to `nrow` and the other varies from 0 up to `ncol
 How can we get all points in that grid? This might be nice:
 
 ```kotlin
-for ( (i, j) in (0 until nrow) * (0 until ncol) ) ...
+for ( (i, j) in (0 until nrow) * (0 until ncol) ) doStuff()
 ```
 
 We do that by [overloading the `*` operator][11a] (and we also get to use an extension function!):
@@ -291,3 +291,13 @@ The solution is a fairly straightforward [DFS recursion][12c].
 [12a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/with-default.html
 [12b]: https://docs.python.org/3/library/collections.html#collections.defaultdict
 [12c]: https://en.wikipedia.org/wiki/Depth-first_search
+
+# Day 13
+
+Today we used more [data classes][13a].
+We used them to model a point, a fold, and the whole piece of folded origami.
+Since `hashCode` and `equals` are implemented for us with data classes, we can
+use them as members of a `Set`.
+The origami paper is modeled to have a set of points.
+
+[13a]: https://kotlinlang.org/docs/data-classes.html
