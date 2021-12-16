@@ -325,3 +325,37 @@ As usual, the receiver is referred to as `this` inside the lambda, and it can be
 [14a]: https://en.wikipedia.org/wiki/Bigram
 [14b]: https://kotlinlang.org/docs/scope-functions.html#apply
 [14c]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/with-default.html
+
+# Day 15
+
+For this challenge, I write an implementation of Dijkstra's shortest path algorithm, which necessitates writing a directed graph class.
+This is a beefier challenge than most.
+
+First, I make use of [`typealias`][15a] to reduce the visual clutter.
+The graph has nodes being `Pair<Int, Int>`.
+Instead of using that type everywhere, I first declared a type alias: 
+
+```kotlin
+typealias Node = Pair<Int, Int>
+```
+
+and now I can use `Node` where I need to declare a type.
+
+The graph class is declared with [generics][15b]:
+
+```kotlin
+class WeightedDiGraph<E> {
+    // ... do stuff with E
+}
+```
+
+I overload the [indexed access operators][15c], so that `graph[node]` returns the neighbors and `graph[node1, node2]` returns the edge weight.
+
+This is a fun challenge!
+
+My Kotlin solution runs in 3.2 seconds while my Python solution with `networkx` runs in 4 seconds. I expected Kotlin to be much better 🤔
+
+
+[15a]: https://kotlinlang.org/docs/type-aliases.html
+[15b]: https://kotlinlang.org/docs/generics.html#generic-constraints
+[15c]: https://kotlinlang.org/docs/operator-overloading.html#indexed-access-operator
