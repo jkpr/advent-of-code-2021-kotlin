@@ -16,7 +16,7 @@ data class Target(val xMin: Int, val xMax: Int, val yMin: Int, val yMax: Int) {
         val dxMin = generateSequence(1) { it + 1 }.first { it.sumN() >= xMin }
         val dxMax = xMax
         val dyMin = yMin
-        val dyMax = -yMin
+        val dyMax = -yMin - 1
         (dxMin..dxMax) * (dyMin..dyMax)
     }
 
