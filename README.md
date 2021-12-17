@@ -355,7 +355,31 @@ This is a fun challenge!
 
 My Kotlin solution runs in 3.2 seconds while my Python solution with `networkx` runs in 4 seconds. I expected Kotlin to be much better 🤔
 
+### Resources for Dijkstra's algorithm and A*
+
+- [Dijkstra and A* algorithm explained][15d]
+- [A* pathfinding explanation on Youtube][15e]
 
 [15a]: https://kotlinlang.org/docs/type-aliases.html
 [15b]: https://kotlinlang.org/docs/generics.html#generic-constraints
 [15c]: https://kotlinlang.org/docs/operator-overloading.html#indexed-access-operator
+[15d]: https://www.redblobgames.com/pathfinding/a-star/implementation.html
+[15e]: https://www.youtube.com/watch?v=-L-WgKMFuhE
+
+# Day 16
+
+I use a top-level factory function for different data classes, `Literal`, `Header`, and `Packet`.
+
+See a [discussion here about different types of factory functions][16a].
+Other options are a companion object or an extension function. 
+
+Today, I wrote a nice extension function for converting a hex string to a binary string:
+
+```kotlin
+fun String.hexToBin() = this.map { it.digitToInt(16).toString(2).padStart(4, '0') }.joinToString("")
+```
+
+This makes use of [`Char.digitToInt()`][16b].
+
+[16a]: https://kt.academy/article/ek-factory-functions
+[16b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/digit-to-int.html
