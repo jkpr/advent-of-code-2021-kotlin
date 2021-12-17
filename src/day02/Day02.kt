@@ -1,6 +1,6 @@
 package day02
 
-import readInput
+import utils.readInput
 
 fun part1(input: List<String>): Int {
     val (length, depth) = input.map { it.split(" ") }.partition { it[0] == "forward" }

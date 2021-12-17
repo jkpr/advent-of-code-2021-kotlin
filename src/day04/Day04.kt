@@ -1,6 +1,6 @@
 package day04
 
-import readInput
+import utils.readInput
 
 
 class Board(private val rows: List<List<String>>) {

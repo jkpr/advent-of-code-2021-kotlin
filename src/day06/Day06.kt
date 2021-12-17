@@ -1,6 +1,6 @@
 package day06
 
-import readInput
+import utils.readInput
 
 
 fun spawnLanternfish(input: List<String>, days: Int): Long {

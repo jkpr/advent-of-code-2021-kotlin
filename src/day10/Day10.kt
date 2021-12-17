@@ -1,6 +1,6 @@
 package day10
 
-import readInput
+import utils.readInput
 
 
 val matches = mapOf(

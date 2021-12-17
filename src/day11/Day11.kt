@@ -1,6 +1,7 @@
 package day11
 
-import readInput
+import utils.readInput
+import utils.times
 
 
 const val FLASH_VALUE = 10
@@ -48,8 +49,6 @@ class Octopuses(input: List<String>) {
         }
     }
 }
-
-operator fun IntRange.times(other: IntRange) = this.flatMap { i -> other.map { j -> i to j }}
 
 fun part1(input: List<String>) = Octopuses(input).let{ octopuses ->
     (1..100).sumOf { _ ->

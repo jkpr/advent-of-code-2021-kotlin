@@ -1,7 +1,7 @@
 package day17
 
-import readInput
-import times
+import utils.readInput
+import utils.times
 
 
 typealias Point = Pair<Int, Int>

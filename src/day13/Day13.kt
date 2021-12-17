@@ -1,6 +1,6 @@
 package day13
 
-import readInput
+import utils.readInput
 
 
 data class Point(val x: Int, val y: Int)

@@ -1,6 +1,6 @@
 package day08
 
-import readInput
+import utils.readInput
 
 
 fun getPatternMap(patterns: List<Set<Char>>) = patterns.associateBy { it.size }.mapKeys {

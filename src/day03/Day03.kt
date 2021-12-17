@@ -1,6 +1,6 @@
 package day03
 
-import readInput
+import utils.readInput
 
 fun part1(input: List<String>): Int {
     val gamma = buildString {

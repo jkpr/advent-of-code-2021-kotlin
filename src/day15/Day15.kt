@@ -1,8 +1,10 @@
 package day15
 
-import kotlin.math.abs
-import readInput
 import java.util.PriorityQueue
+import kotlin.math.abs
+import utils.readInput
+import utils.times
+
 
 
 typealias Node = Pair<Int, Int>
@@ -84,8 +86,6 @@ fun dijkstraPathWeight(graph: WeightedDiGraph<Node>, start: Node, end: Node): In
     }
     return costSoFar.getValue(end)
 }
-
-operator fun IntRange.times(other: IntRange) = this.flatMap { i -> other.map { j -> i to j }}
 
 fun part1(input: List<String>) = buildTile(input).let {
     val graph = buildGraph(it)

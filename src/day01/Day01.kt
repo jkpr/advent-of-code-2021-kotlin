@@ -1,6 +1,6 @@
 package day01
 
-import readInput
+import utils.readInput
 
 fun part1(input: List<String>) = input.map { it.toInt() }.windowed(size=2).count { it[1] > it[0] }
 

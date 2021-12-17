@@ -1,6 +1,6 @@
 package day14
 
-import readInput
+import utils.readInput
 
 
 fun nextGen(bigramCounts: Map<String, Long>, rules: Map<String, String>) = mutableMapOf<String, Long>().withDefault { 0 }.apply {

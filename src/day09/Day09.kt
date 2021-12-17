@@ -1,6 +1,6 @@
 package day09
 
-import readInput
+import utils.readInput
 
 
 const val HIGHEST_LEVEL = 9

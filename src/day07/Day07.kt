@@ -1,7 +1,7 @@
 package day07
 
-import readInput
 import kotlin.math.abs
+import utils.readInput
 
 
 fun moveCrabs(input: List<String>, fuelCost: (distance: Int) -> Int) = input[0].split(",").map { it.toInt() }.let { crabs ->

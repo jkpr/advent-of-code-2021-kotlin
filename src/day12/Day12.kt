@@ -1,6 +1,6 @@
 package day12
 
-import readInput
+import utils.readInput
 
 
 class Passage(input: List<String>, val allowRevisit: Boolean) {

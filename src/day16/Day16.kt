@@ -1,7 +1,8 @@
 package day16
 
-import readInput
 import java.util.LinkedList
+import utils.readInput
+
 
 
 data class Literal(val start: Int, val end: Int, val value: Long)

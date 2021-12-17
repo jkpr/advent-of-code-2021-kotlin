@@ -1,7 +1,7 @@
 package day05
 
-import readInput
 import java.lang.Integer.max
+import utils.readInput
 
 
 data class Line(val x1: Int, val y1: Int, val x2: Int, val y2: Int) {
