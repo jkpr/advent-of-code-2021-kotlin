@@ -383,3 +383,52 @@ This makes use of [`Char.digitToInt()`][16b].
 
 [16a]: https://kt.academy/article/ek-factory-functions
 [16b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/digit-to-int.html
+
+# Day 17
+
+This solution utilizes several different concepts that are idiomatic to Kotlin.
+
+First, I use a `typealias` again for `Point` and `Velocity`. Both are `Pair<Int, Int>`.
+
+One interesting thing is that I added [extension properties][17a] here:
+
+```kotlin
+typealias Point = Pair<Int, Int>
+val Point.x get() = first
+val Point.y get() = second
+```
+
+so that instead of accessing the x-coordinate of a Point with `point.first`, I can use `point.x`.
+
+This is the first time using the [`run`][17b] scope function.
+In this case, I use it to group together a chunk of code that initializes a class property.
+I could have also used an `init { ... }` block to do that.
+
+In other words, these are somewhat equivalent:
+
+```kotlin
+class A {
+    val prop = run {
+        // ... calculations
+        computeSomething()
+    }
+}
+
+class B {
+    val prop: Int // type must be declared
+    init {
+        // ... calculations
+        prop = computeSomething()
+    }
+}
+```
+
+With the `run` block, the type can be inferred from the result of the lambda.
+
+I also use [`infix`][17c] functions to make things more readable.
+For example, instead of `trajectory.endsIn(target)` we can have `trajectory endsIn target`.
+Taking away those parentheses make things easier on the eyes.
+
+[17a]: https://kotlinlang.org/docs/extensions.html#extension-properties
+[17b]: https://kotlinlang.org/docs/scope-functions.html#run
+[17c]: https://kotlinlang.org/docs/functions.html#infix-notation
