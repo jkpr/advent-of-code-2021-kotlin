@@ -67,8 +67,7 @@ fun buildGraph(tile: Tile) = WeightedDiGraph<Node>().apply {
 fun dijkstraPathWeight(graph: WeightedDiGraph<Node>, start: Node, end: Node): Int {
     val cameFrom = mutableMapOf(start to start)
     val costSoFar = mutableMapOf(start to 0)
-    val queue = PriorityQueue<Pair<Int, Node>>(compareBy { -it.first })
-    queue.add(0 to start)
+    val queue = PriorityQueue<Pair<Int, Node>>(compareBy { -it.first }).apply { add(0 to start) }
     while (queue.isNotEmpty()) {
         val current = queue.poll().second
         if (current == end) {
