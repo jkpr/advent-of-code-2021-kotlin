@@ -432,3 +432,9 @@ Taking away those parentheses make things easier on the eyes.
 [17a]: https://kotlinlang.org/docs/extensions.html#extension-properties
 [17b]: https://kotlinlang.org/docs/scope-functions.html#run
 [17c]: https://kotlinlang.org/docs/functions.html#infix-notation
+
+# Day 22
+
+Today I have more fun with operator overloading and infix functions.
+I have a `Cuboid` data class that supports the `minus` operator (e.g. `cuboid1 - cuboid2`) and `intersect` (e.g. `cuboid1 intersect cuboid2`).
+This allows for concise and expressive code!
