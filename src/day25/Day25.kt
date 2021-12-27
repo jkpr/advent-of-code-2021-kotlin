@@ -1,6 +1,7 @@
 package day25
 
 import utils.readInput
+import kotlin.system.measureTimeMillis
 
 
 typealias Point = Pair<Int, Int>
@@ -55,10 +56,9 @@ fun main() {
     val subpackage = "day25"
     val input = readInput(subpackage, "input")
 //    val input = readInput(subpackage, "test_input")
-    val start = System.currentTimeMillis()
-    val result1 = part1(input)
-    println("Part 1: $result1")
-    val end = System.currentTimeMillis()
-    val delta = (end - start) / 1000.0
-    println("Time elapsed: $delta seconds")
+    val elapsed = measureTimeMillis {
+        val result1 = part1(input)
+        println("Part 1: $result1")
+    }
+    println("Time elapsed: ${elapsed / 1000.0 } seconds")
 }
