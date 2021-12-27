@@ -438,3 +438,68 @@ Taking away those parentheses make things easier on the eyes.
 Today I have more fun with operator overloading and infix functions.
 I have a `Cuboid` data class that supports the `minus` operator (e.g. `cuboid1 - cuboid2`) and `intersect` (e.g. `cuboid1 intersect cuboid2`).
 This allows for concise and expressive code!
+
+# Day 25
+
+To solve the problem, we run a simulation until the sea cucumbers cannot move anymore.
+If we were to create a list, this could be a _very large list_.
+Instead, we make a [sequence][25a].
+Kotlin sequences have a lot of benefits.
+
+- They are evaluated lazily
+- A lot of operations are stateless
+- A terminal operation is what gives a result (such as `toList()`)
+
+We have a data class `SeaCucumbers` and a factory method `makeSeaCucumbers`.
+It has a method called `march()` that advances the east and south herds one step and returns a new `SeaCucumbers` instance.
+Using [`generateSequence()`][25b], we make a sequence of the sea cucumber progression.
+
+```kotlin
+generateSequence( makeSeaCucumbers(input) ) { it.march() }
+```
+
+Take note, this does not actually make a list of `SeaCucumber` instances! We need to apply a _terminal_ operation (we use `first`) to get a result.
+
+Before we get to that terminal operation, we need some _intermediate, stateless_ operations.
+We need to know the index of the sea cucumber march progression, so we use [`withIndex()`][25c].
+We also need to compare one sea cucumber configuration to the next to see if they are equal.
+Kotlin's [`zipWithNext()`][26d] is perfect for that.
+
+Now, we are ready to apply a terminal operation: [`first()`][26e].
+We pass in a predicate that is true when the previous configuration is equal to the current one.
+Therefore, the full solution is:
+
+```kotlin
+fun part1(input: List<String>) = generateSequence( makeSeaCucumbers(input) ) {
+    it.march()
+}.withIndex().zipWithNext().first { (prev, next) ->
+    prev.value == next.value
+}.second.index
+```
+
+Another fun thing I did was to use `typealias` and add some extension properties and functions:
+
+```kotlin
+typealias Point = Pair<Int, Int>
+val Point.i get() = first
+val Point.j get() = second
+operator fun Point.plus(other: Point) = (first + other.i) to (second + other.j)
+operator fun Point.rem(other: Point) = (first % other.i) to (second % other.j)
+```
+
+This lets me refer to `i` for the row number and `j` for the column.
+I can add points together and use modular arithmetic, too. For example, if `seaCucumber` is a `Point`, a.k.a `Pair<Int, Int>`
+
+```kotlin
+val east = 0 to 1
+val dimensions = input.size to input[0].length
+val movedEast = (seaCucumber + east) % dimensions
+```
+
+Now `movedEast` is the new location for this sea cucumber. The modular arithmetic handles the wrap around, as required by the problem.
+
+[25a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/
+[25b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/generate-sequence.html
+[25c]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/with-index.html
+[26d]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/zip-with-next.html
+[26e]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/first.html
