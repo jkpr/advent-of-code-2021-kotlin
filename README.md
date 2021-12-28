@@ -433,6 +433,80 @@ Taking away those parentheses make things easier on the eyes.
 [17b]: https://kotlinlang.org/docs/scope-functions.html#run
 [17c]: https://kotlinlang.org/docs/functions.html#infix-notation
 
+# Day 18
+
+This solution makes heavy use of [regular expressions][18a] and their [match results][18b].
+Kotlin has a lot of built-in functionality for regular expressions and, as always, the documentation is great.
+
+_Aside:_ I use a `List` as a stack and the methods `.add(item)` and `.removeLast()` for push and pop, respectively.
+The stack tracks the `'['` and `']'` characters in the string.
+
+For the _explode_ functionality we use a regular expression, we get substrings before and after the nested pair either:
+
+- `val match = """\d+""".toRegex().findAll(before).lastOrNull()` to get the number just before the nested pair
+- `val match = """\d+""".toRegex().findAll(after).firstOrNull()` to get the number just after the nested pair
+
+That `MatchResult` object has a `range` property that pairs nicely with [`String.replaceRange()`][18c].
+Once we have the match, we calculate the new number and insert it into the string.
+The full definition for adding to the number just after the nested pair is:
+
+```kotlin
+fun String.addToFirstInt(int: Int): String {
+    val match = """\d+""".toRegex().findAll(this).firstOrNull()
+    return if (match == null) this else {
+        replaceRange(match.range, (match.value.toInt() + int).toString())
+    }
+}
+```
+
+The _split_ functionality on snail numbers uses similar techniques. One small detail to get the right number correct:
+
+```kotlin
+fun String.split(): String {
+    val match = """\d{2,}""".toRegex().findAll(this).firstOrNull()
+    return if (match == null) this else {
+        val left = match.value.toInt() / 2
+        val right = match.value.toInt() / 2 + match.value.toInt() % 2  // remember this second term!
+        replaceRange(match.range, "[$left,$right]")
+    }
+}
+```
+
+To compute the _magnitude_, I look for all `[A,B]`, where `A` and `B` are integers, using regular expressions.
+Then I make the computation `3 * A + 2 * B` and replace the match with that computed value.
+This time, however, the match includes non-digit characters.
+So I use regular expression "groups" by putting parentheses around expressions I want to capture.
+
+```kotlin
+snail.replace("""\[(\d+),(\d+)]""".toRegex()) { match ->
+    val (left, right) = match.groupValues.drop(1).map { it.toInt() }
+    (3 * left + 2 * right).toString()
+}
+```
+
+- We use [`String.replace()`][18d] to replace all matches at once.
+The replacement can depend on the match itself by passing a lambda.
+- Here I have to `.drop(1)` because the first group is always the entire matched string, e.g. `[A, B]`. See [`groupValues`][18e].
+
+_Side note 1:_ Destructuring uses `.componentN()` functionality.
+This works even though the result of `.map()` may have more than two integers after mapping:
+
+_Side note 2:_ [`Regex matches String`][18f] (infix function) is used to check if a string is a number, e.g. `"""\d+""".toRegex() matches string`
+
+```kotlin
+val (int1, int2) = line.split(',').map { it.toInt() }
+// is equivalent to
+val int1 = line.split(',').map { it.toInt() }.component1()
+val int2 = line.split(',').map { it.toInt() }.component2()
+```
+
+[18a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-regex/
+[18b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-match-result/
+[18c]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/replace-range.html
+[18d]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/replace.html
+[18e]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-match-result/group-values.html
+[18f]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-regex/matches.html
+
 # Day 22
 
 Today I have more fun with operator overloading and infix functions.
