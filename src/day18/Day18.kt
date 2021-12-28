@@ -27,9 +27,9 @@ fun String.explode(): String {
                 val start = stack.removeLast()
                 if (stack.size >= 4) {
                     val (int1, int2) = substring(start + 1, index).split(',').map { it.toInt() }
-                    val first = substring(0, start).addToLastInt(int1)
-                    val last = substring(index + 1).addToFirstInt(int2)
-                    return "${first}0$last"
+                    val left = substring(0, start).addToLastInt(int1)
+                    val right = substring(index + 1).addToFirstInt(int2)
+                    return "${left}0$right"
                 }
             }
         }
@@ -80,8 +80,8 @@ fun part2(input: List<String>) = input.flatMap { i ->
 
 fun main() {
     val subpackage = "day18"
-//    val input = readInput(subpackage, "input")
-    val input = readInput(subpackage, "test_input")
+    val input = readInput(subpackage, "input")
+//    val input = readInput(subpackage, "test_input")
     val elapsed = measureTimeMillis {
         val result1 = part1(input)
         val result2 = part2(input)
