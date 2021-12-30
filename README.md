@@ -10,6 +10,7 @@ Feel free to create a Github issue if you want to discuss anything!
 
 1. Clone this repo: `git clone https://github.com/jkpr/advent-of-code-2021-kotlin`
 2. Open in IntelliJ IDEA
+3. Copy your input for `dayN` to `input.txt` inside of `dayN` package (`src/dayN/input.txt`).
 
 # Table of contents
 
@@ -506,6 +507,98 @@ val int2 = line.split(',').map { it.toInt() }.component2()
 [18d]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/replace.html
 [18e]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-match-result/group-values.html
 [18f]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-regex/matches.html
+
+# Day 19
+
+This is probably the most difficult day in Advent of Code 2021.
+The main strategy is label the first scanner's readings as solved with scanner at `(0,0,0)`. Then:
+
+1. Iterate through the remaining unknown scanners' readings.
+2. Perform all rotations
+3. Sort the known beacons and the rotated beacons along X, Y, and Z dimensions to look for common diffs from one beacon to the next.
+4. If there is a common diff, try to align rotated beacons to the known beacons based on the two beacons where that diff happens
+5. If there is overlap of 12 or more, keep the aligned beacons and remove them from the unknown scanners' readings.
+
+We get to use some cool Kotlin features today.
+
+First: I use a data class `XYZ` to track a point or vector in space.
+It supports addition, subtraction, unary minus, and computing manhattan distance between two.
+The data class `XYZ` can also rotate around the X, Y, and Z axes.
+
+The next interesting thing is how I iterate through all the rotations.
+
+It is well known that rotations of 90 degree increments in X, Y, and Z dimensions form a mathematical group.
+There are 4 rotations in each dimension, so you might think that there are `4 * 4 * 4 = 64` total rotations to check.
+In fact there are only 24. That can be calculated as follows:
+There are 6 ways to face (think sides of a cube), and four ways to be rotated while facing that direction, `6 * 4 = 24`.
+
+I iterate through all four rotations of each of X, Y, Z rotations (64 total), composing a rotation function.
+But I only yield the ones that are unique.
+I keep track of uniqueness by computing the rotation on the basis vectors in 3D space. That looks like:
+
+```kotlin
+fun allRotations() = iterator {
+    val reference = listOf(
+        XYZ(1, 0 ,0),
+        XYZ(0, 1 ,0),
+        XYZ(0, 0 ,1),
+    )
+    val seen = mutableSetOf<List<XYZ>>()
+    for (i in 0..3) for (j in 0..3) for (k in 0..3) {
+        val rotate = { point: XYZ ->
+            var xyz = point
+            repeat(i) { xyz = xyz.xRotate() }
+            repeat(j) { xyz = xyz.yRotate() }
+            repeat(k) { xyz = xyz.zRotate() }
+            xyz
+        }
+        val rotatedReference = reference.map{ rotate(it) }
+        if (rotatedReference !in seen) {
+            seen.add(rotatedReference)
+            yield(rotate)
+        }
+    }
+}
+```
+
+This makes use of [`iterator`][19a] and [`yield`][19b].
+Of course, I could have just made a list of these rotation lambdas and returned that, too.
+
+Another interesting feature is that I make a [`Comparator`][19c] of `XYZ` instances using, for example, [`compareBy<XYZ> { it.x }`][19d].
+A `Comparator` takes two instances of a class and returns an integer representing the ordering of the two objects.
+Meanwhile, `compareBy` can do multiple things, but here I pass a lambda that returns a comparable value (order on the `XYZ.x` property, for example).
+The `Comparator` is used in [`Collection.sortedWith(Comparator)`][19e].
+
+As an aside, there are a lot of ways to sort built into Kotlin! Read the documentation carefully.
+
+Finally, I want to look at a few things here:
+
+```kotlin
+fun findAlignedBeacons(knownBeacons: Set<XYZ>, allUnknownScanners: List<List<XYZ>>): IndexedValue<BeaconsAndScanners> {
+    for ((index, unknownScanners) in allUnknownScanners.withIndex()) for (rotate in allRotations()) {
+        val rotatedBeacons = unknownScanners.map { point -> rotate(point) }
+        attemptAlignment(knownBeacons, rotatedBeacons)?.let {
+            return@findAlignedBeacons IndexedValue(index, it)
+        }
+    }
+    throw Exception("Unable to find contiguous scanners")
+}
+```
+
+- I return an [IndexedValue][19f]. This is a built-in class to represent a number (the index) and an object (the value).
+I could use a pair, but this is more idiomatic. I want to return the index gives aligned beacons along with those aligned beacons and the scanner.
+- The IndexedValue object is returned on condition that alignment succeeds. However, the return value is not nullable because I have a `throw` and Exception.
+- I have two nested `for` loops on a single line. This works because the `for` loop performs the next statement, even if it isn't in braces `{` and `}`, just like `if (condition) value`
+- I [return a value for the function from inside a lambda using an implicit label][19g]. Normally a return statement inside a lambda returns a value for that lambda. Sure, I could have saved the value to a val, and if not null, then return the IndexedValue. But I'm trying out some Kotlin features! 😄 
+
+[19a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/iterator.html
+[19b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/-sequence-scope/yield.html
+[19c]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparator/#kotlin.Comparator
+[19d]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.comparisons/compare-by.html
+[19e]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/sorted-with.html
+[19f]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-indexed-value/
+[19g]: https://kotlinlang.org/docs/returns.html#return-to-labels
+
 
 # Day 22
 
