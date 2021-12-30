@@ -599,6 +599,30 @@ I could use a pair, but this is more idiomatic. I want to return the index gives
 [19f]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-indexed-value/
 [19g]: https://kotlinlang.org/docs/returns.html#return-to-labels
 
+# Day 20
+
+For this solution I use [arrays][20a] of True/False to represent the image. For example, this initializes the image:
+
+```kotlin
+val imageChars = input.drop(2)
+val height = imageChars.size
+val width = imageChars[0].length
+val image = Array(height) { i -> Array(width) { j -> imageChars[i][j] == '#' } }
+```
+
+where `input` is a list of `String`, the puzzle input.
+
+With each enhancement, the image grows bigger by one pixel in each direction (add 2 to the previous height and width).
+
+In order to calculate the enhancement algorithm index, I get the 9 bits surrounding a pixel and then
+
+```kotlin
+bits.reversed().withIndex().sumOf { (index, bit) -> if (bit) 1 shl index else 0 }
+```
+
+Note: `1 shl index` is the same as `2 ** index` in python. There is no native exponent operator in Kotlin.
+
+[20a]: https://kotlinlang.org/docs/basic-types.html#arrays
 
 # Day 22
 
