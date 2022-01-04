@@ -624,6 +624,47 @@ Note: `1 shl index` is the same as `2 ** index` in python. There is no native ex
 
 [20a]: https://kotlinlang.org/docs/basic-types.html#arrays
 
+# Day 21
+
+Today we do modular arithmetic on something other than, e.g. 0 - N, mod N + 1.
+Today it is 1 - 10 then repeat back to 1. We need to bring it back to a scale that starts at 0.
+Since 1 - 10 starts at 1, we subtract by 1. Since there are 10 squares, we `mod 10`. Then to get back to the original scale, add 1.
+
+```kotlin
+val nextSquare = (currentSquare - 1) % 10 + 1
+```
+
+Do similar for the deterministic die, but that one is 1-100.
+
+What is interesting in Kotlin? We use [argument defaults][21a], e.g.
+
+```kotlin
+data class Player(val square: Int, val score: Int = 0)
+```
+
+A new player starts with a score of 0, initially. Just initialize with a starting square, e.g. `Player(8)`.
+
+We use [`buildList`][21b] when getting the list of next states in the Dirac version.
+Since we know there are `3 * 3 * 3 = 27` next states being added to the list (rolling the die three times, each with three possibilities), we declare the size of the array.
+
+```kotlin
+buildList(27) {
+    for (i in 1..3) for (j in 1..3) for (k in 1..3) {
+        // do stuff, build nextState
+        add(nextState)
+    }
+}
+```
+
+When writing a recursive function, we need to carefully define the base case / stop conditions. In this situation, it is when the game is over.
+
+My recursive function is `getWinTally(cache: DiracCache = emptyCache())`.
+If it is the first time being called, then I create a new cache, otherwise I pass the cache from call to call.
+The cache speeds things up, because there are many identical game states that are reached from different paths.
+
+[21a]: https://kotlinlang.org/docs/functions.html#default-arguments
+[21b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/build-list.html
+
 # Day 22
 
 Today I have more fun with operator overloading and infix functions.
