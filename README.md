@@ -671,6 +671,44 @@ Today I have more fun with operator overloading and infix functions.
 I have a `Cuboid` data class that supports the `minus` operator (e.g. `cuboid1 - cuboid2`) and `intersect` (e.g. `cuboid1 intersect cuboid2`).
 This allows for concise and expressive code!
 
+# Day 23
+
+For some reason, I have written everything with extension functions and typealiases instead of using classes.
+
+I use a `List<Int>` to represent the state of the squares. 
+
+- 0 means empty
+- 1 means A
+- 2 means B
+- 3 means C
+- 4 means D
+
+Indexes 0 - 6, inclusive, are the hallway squares that can be occupied.
+The squares in front of the rooms cannot be occupied, so they are not in the array.
+
+There are also helper arrays that show the distance and which squares would be crossed from to go from a room to a hallway, or vice versa.
+
+One strange that happened from using extension functions is that I would get multiple receivers, and the compiler didn't always know what to do.
+For example:
+
+```kotlin
+fun Squares.endConfiguration() = buildList {
+    // what does "this" refer to?
+}
+```
+
+So I try to avoid having multiple receivers in the same block. In fact, the above better written as:
+
+```kotlin
+fun Squares.endConfiguration() = List(size) {
+    if (it in 0 until LEN_HALL) EMPTY_SQUARE else (it - LEN_HALL) / roomDepth + 1
+}
+```
+
+Using a nice / convenient [constructor for `List`][23a], that uses an initializer function based on the index in the list.
+
+[23a]: https://kotlinlang.org/docs/constructing-collections.html#initializer-functions-for-lists
+
 # Day 25
 
 To solve the problem, we run a simulation until the sea cucumbers cannot move anymore.
