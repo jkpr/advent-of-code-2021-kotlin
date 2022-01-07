@@ -709,6 +709,20 @@ Using a nice / convenient [constructor for `List`][23a], that uses an initialize
 
 [23a]: https://kotlinlang.org/docs/constructing-collections.html#initializer-functions-for-lists
 
+# Day 24
+
+This is a difficult problem that requires analyzing the input to see what is happening.
+Once you know what is happening, it is not too difficult.
+
+I use [`.chunked()`][24a] to iterate through the instructions. Every 18 lines is a set common block of instructions.
+
+One more interesting point is that [`.joinToString()`][24b] works on a collection of any type.
+Under the hood, the code calls `.toString()` on each element before joining.
+The method can also accept a lambda that transforms an element to a string, according to the design of the programmer.
+
+[24a]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/chunked.html
+[24b]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to-string.html
+
 # Day 25
 
 To solve the problem, we run a simulation until the sea cucumbers cannot move anymore.
